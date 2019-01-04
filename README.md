@@ -5,7 +5,7 @@ An easy tool for generating CLI and controling command params
 
 > Date: 2019/1/4
 
-> 模板集成了插件打包，一键配置package.json和mocha测试等功能
+> 提供命令行参数注册解析，和输出cli文档功能
 
 ## Feature
 * 提供完善的webpack打包配置文件，目前支持vue和原生js插件，不支持jsx文件。
