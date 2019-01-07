@@ -1,4 +1,4 @@
-const { flag } = require('../src/index')
+const { flag, output } = require('../src/index')
 const program = flag()
 
 const commandlist = [
@@ -38,3 +38,18 @@ program
     .run()
 
 // console.log(program)
+
+const cli = output()
+cli
+    .writeUsage('flag <command> [options]', 'cli test')
+    .writeCommands([
+        {title: 'init', desc: 'init tset'},
+        {title: 'build', desc: 'build tset'},
+        {title: 'create', desc: 'create tset'}
+    ])
+    .writeOptions([
+        {title: '-V, --version', desc: 'output the version number'},
+        {title: '-h, --help', desc: 'output usage information'}
+    ])
+    .write('测试测试测试', '\nflag plugin')
+    .render()

@@ -3,10 +3,11 @@ const exePath = process.argv[0]
 const programPath = process.argv[1]
 
 /**
- * @author Alan Chen
- * @since 2019/1/4
+ * @module Flag
  * @version 0.0.1
  * @description 解析命令行参数的类，内置的方法均支持链式调用。匹配之后函数的执行顺序以链式调用顺序作为标准
+ * @author Alan Chen
+ * @since 2019/1/4
  * @instance
  *  @method param 解析命令行参数的原始函数。
  *   @param {Object} 包含3个可选key：
@@ -17,7 +18,7 @@ const programPath = process.argv[1]
  *                          1. 只有index时，只要index对应索引的参数存在，触发
  *                          2. 只有flag时，只要参数列表中存在flag，flag不需要索引匹配，触发
  *                          3. index和flag均存在，必须同时匹配索引和名称，触发
- *  @returns instance
+ *   @returns instance
  *  
  *  @method command 专门用于解析命令(索引为0)参数
  *   @param {String} flag 标志位名称，必选
@@ -41,7 +42,7 @@ const programPath = process.argv[1]
  *          const program = new Flag()
  *          program.register('help', info => {
  *              // 如果想help方法链式调用，只需要返回program.param()或program
- *              program.param({
+ *              return program.param({
  *                  flag: '--help',
  *                  action() {
  *                      console.log(info)
@@ -55,7 +56,7 @@ const programPath = process.argv[1]
  * 
  *  @method run 运行,通过命令行参数列表来匹配执行注册的到实例的action函数
  * 
- * @summary 必须要在program调用run方法，否则命令行不会被解析
+ * @summary 必须调用run方法，否则命令行不会被解析
  *                                    
  */
 class Flag {
