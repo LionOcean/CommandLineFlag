@@ -1,5 +1,5 @@
 {
-  "name": "commandlineflag",
+  "name": "@alanchenchen/commandlineflag",
   "version": "0.0.1",
   "publisher": "Alan Chen",
   "author": "LionOcean",
@@ -8,7 +8,8 @@
   "keywords": [
     "command",
     "flag",
-    "cli"
+    "cli",
+    "cli-tool"
   ],
   "license": "MIT",
   "private": false,

@@ -1,21 +1,22 @@
-/**@module Output
- * @version 0.0.1
+/**
+ * @module Output
+ * @version 0.0.2
  * @description 输出cli文档的工具，内置的方法均支持链式调用。
  * @author Alan Chen
- * @since 2019/1/7
+ * @since 2019/1/9
  * @instance
  *  @method writeUsage 输出usage信息
  *   @param {String} usageInfo usage直接打印出来的信息
  *   @param {String} description usage下方换行显示的cli的说明信息
  *   @returns instance
  *  
- *  @method writeCommands 输出command命令的信息
+ *  @method writeCommands 输出command命令的信息，可以多次调用，多次调用会叠加而不会覆盖
  *   @param {String | Array} info 
  *          当只有一个参数时，必须是数组，数组项包含2个key: title(左侧的command名称)和desc(右侧的描述)
  *          当有两个参数时，参数均为字符串，参数一是command名称，参数二是描述
  *   @returns instance
  *  
- *  @method writeOptions 输出option标志位的信息
+ *  @method writeOptions 输出option标志位的信息，可以多次调用，多次调用会叠加而不会覆盖。默认存在两条信息 => -h 和 -V的帮助文档
  *   @param {String | Array} info 
  *          当只有一个参数时，必须是数组，数组项包含2个key: title(左侧的option名称)和desc(右侧的描述)
  *          当有两个参数时，参数均为字符串，参数一是option名称，参数二是描述
@@ -25,24 +26,29 @@
  *   @param {String} desc 信息，支持多个参数
  *   @returns instance
  * 
- *  @method render 渲染文档并输出到stdout，同时返回文档的字符串
+ *  @method render 渲染帮助文档信息
+ *   @param {Boolean} isShowLog 决定是否渲染文档并输出到stdout，默认为true
+ *   @returns {String} 返回文档的字符串
  * 
- * @summary 必须调用render方法，否则文档不会被输出
- *                                    
+ * @summary 必须调用render方法，否则文档不会被渲染输出，如果搭配Flag模块，并且Flag实例inject(注入)了Output实例，那么不需要调用render。因为Flag实例默认实现了该方法    
+ *                              
  */
 class Output {
     constructor(opt) {
         this.configs = {
             stringIndent: {
                 command: opt && opt.indent.command || 8,
-                option: opt && opt.indent.command || 3
+                option: opt && opt.indent.option || 3
             }
         }
 
         this._content = {
             usage: '',
             commands: [],
-            options: [],
+            options: [
+                {title: '-V, --version', desc: 'output the version number'},
+                {title: '-h, --help', desc: 'output usage information'}
+            ],
             custom: ''
         }
     }
@@ -120,39 +126,40 @@ class Output {
         .join(seperator)
     }
 
-    render() {
+    render(flag=true) {
         let usageStr = `
   Usage: `
-        usageStr += this._content.usage
+        usageStr += this._content.usage + '\n'
 
         let commandStr = `
-  
   Commands: 
   
   `
-        commandStr += this._formatString(this._content.commands, this.configs.stringIndent.command)
+        commandStr += this._formatString(this._content.commands, this.configs.stringIndent.command) + '\n'
 
         let optionStr = `
-  
   Options:
   
   `
-        optionStr += this._formatString(this._content.options, this.configs.stringIndent.option)
+        optionStr += this._formatString(this._content.options, this.configs.stringIndent.option) + '\n'
 
         const customStr = this._content.custom
 
-        let outputStr = usageStr
-       
+        let outputStr = '' 
+        if(this._content.usage != '') {
+            outputStr += usageStr
+        }
         if(this._content.commands.length > 0) {
             outputStr += commandStr
         }
         if(this._content.options.length > 0) {
             outputStr += optionStr
         }
-        outputStr += `
+        outputStr += customStr
 
-${customStr}`
-        console.log(outputStr)
+        if(Boolean(flag)) {
+            console.log(outputStr)
+        }
         return outputStr
     }
 }

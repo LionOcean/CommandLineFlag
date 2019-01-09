@@ -1,5 +1,10 @@
 const { flag, output } = require('../src/index')
 const program = flag()
+const doc = output()
+
+doc
+  .writeUsage('flag <command> [options]', 'cli test')
+  .write('测试测试测试', '\nflag plugin')
 
 const commandlist = [
     'create',
@@ -19,6 +24,7 @@ program.register('name', (info) => {
 })
 
 program
+    .inject(doc)
     .name('自定义信息')
     .param({
         index: 0,
@@ -28,28 +34,20 @@ program
             }
         }
     })
-    .option('--help | -h', ({index, param}, args) => {
-        console.log(`help for: ${args[index-1]}`)
+    .command('init','init tset', ({index, param}, args) => {
+        console.log(`init: ${args[index+1]}`)
     })
-    .command('create',({index, param}, args) => {
-        console.log(`create: ${args[index+1]}`)
+    .command('build', 'build tset', ({index, param}, args) => {
+        console.log(`build: ${args[index-1]}`)
+    })
+    .option('--load', 'watch file but hot-reload anohter file', ({index, param}, args) => {
+        console.log(`load: ${args[index+1]}`)
+    })
+    .option('--cmd', 'watch file but hot-reload a cmd', ({index, param}, args) => {
+        console.log(`cmd: ${args[index+1]}`)
     })
     .version('0.0.3')
     .run()
 
 // console.log(program)
-
-const cli = output()
-cli
-    .writeUsage('flag <command> [options]', 'cli test')
-    .writeCommands([
-        {title: 'init', desc: 'init tset'},
-        {title: 'build', desc: 'build tset'},
-        {title: 'create', desc: 'create tset'}
-    ])
-    .writeOptions([
-        {title: '-V, --version', desc: 'output the version number'},
-        {title: '-h, --help', desc: 'output usage information'}
-    ])
-    .write('测试测试测试', '\nflag plugin')
-    .render()
+// console.log(doc)
