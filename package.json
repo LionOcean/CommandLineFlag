@@ -1,6 +1,6 @@
 {
   "name": "@alanchenchen/commandlineflag",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "Alan Chen",
   "author": "LionOcean",
   "description": "An easy tool for generating CLI and controling command params",

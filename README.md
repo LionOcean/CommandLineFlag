@@ -1,11 +1,23 @@
 # CommandLineFlag
 An easy tool for generating CLI and controling command params
 
-> version: 0.0.1
+> version: 0.0.2
 
-> Date: 2019/1/4
+> Date: 2019/1/9
 
 > 提供命令行参数注册解析，和输出cli文档功能
+
+<div align="center">
+
+[![](assets/logo.png)](https://www.npmjs.com/package/@alanchenchen/commandlineflag)
+
+[![Build Status](https://travis-ci.com/LionOcean/CommandLineFlag.svg?branch=master)](https://travis-ci.com/LionOcean/CommandLineFlag)
+[![](https://img.shields.io/npm/v/@alanchenchen/commandlineflag.svg)](https://www.npmjs.com/package/@alanchenchen/commandlineflag)
+![](https://img.shields.io/node/v/@alanchenchen/commandlineflag.svg)
+![](https://img.shields.io/npm/dt/@alanchenchen/commandlineflag.svg)
+![](https://img.shields.io/github/license/LionOcean/CommandLineFlag.svg)
+
+</div>
 
 ## Feature
 * 通过简单的api调用，可以快速实现cli搭建。
