@@ -46,8 +46,8 @@ class Output {
             usage: '',
             commands: [],
             options: [
-                {title: '-V, --version', desc: 'output the version number'},
-                {title: '-h, --help', desc: 'output usage information'}
+                {title: '-V, --version', desc: 'output the version number', default: true},
+                {title: '-h, --help', desc: 'output usage information', default: true}
             ],
             custom: ''
         }
@@ -152,7 +152,7 @@ class Output {
         if(this._content.commands.length > 0) {
             outputStr += commandStr
         }
-        if(this._content.options.length > 0) {
+        if(this._content.options.filter(a => !Boolean(a.default)).length > 0) {
             outputStr += optionStr
         }
         outputStr += customStr
