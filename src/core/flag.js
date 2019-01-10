@@ -4,6 +4,15 @@ const exePath = process.argv[0]
 const programPath = process.argv[1]
 
 /**
+ * @function 判断参数是否为函数(包括异步函数)
+ * @param {*} fn
+ * @returns {Boolean}  
+ */
+const checkTypeFitFunction = fn => {
+    return Object.prototype.toString.call(fn) == '[object Function]'
+        || Object.prototype.toString.call(fn) == '[object AsyncFunction]'
+}
+/**
  * @module Flag
  * @version 0.0.2
  * @description 解析命令行参数的类，内置的方法均支持链式调用。匹配之后函数的执行顺序以链式调用顺序作为标准
@@ -90,7 +99,7 @@ class Flag {
     command(flag, ...rest) {
         let desc, action
         if(rest.length == 1) {
-            if(Object.prototype.toString.call(rest[0]) == '[object Function]') {
+            if(checkTypeFitFunction(rest[0])) {
                 action = rest[0]
             }
             else {
@@ -99,7 +108,7 @@ class Flag {
         }
         else if(rest.length == 2) {
             desc = rest[0]
-            if(Object.prototype.toString.call(rest[1]) == '[object Function]') {
+            if(checkTypeFitFunction(rest[1])) {
                 action = rest[1]
             }
             else {
@@ -118,7 +127,7 @@ class Flag {
     option(flag, ...rest) {
         let desc, action
         if(rest.length == 1) {
-            if(Object.prototype.toString.call(rest[0]) == '[object Function]') {
+            if(checkTypeFitFunction(rest[0])) {
                 action = rest[0]
             }
             else {
@@ -127,7 +136,7 @@ class Flag {
         }
         else if(rest.length == 2) {
             desc = rest[0]
-            if(Object.prototype.toString.call(rest[1]) == '[object Function]') {
+            if(checkTypeFitFunction(rest[1])) {
                 action = rest[1]
             }
             else {
@@ -162,7 +171,7 @@ class Flag {
         }
     }
 
-    run() {
+    async run() {
         // 过滤得到匹配flag的操作，如果注入了Output实例，则补全实例中的command文档或option文档
         let targetFlagList = this._flagList.filter(item => {
             const isOnlyIndexExist = typeof item.index == 'number' && !Boolean(item.flag)
@@ -220,14 +229,14 @@ class Flag {
 
         this._flagList = targetFlagList
 
-        // 执行匹配项中的action逻辑
-        targetFlagList.forEach(item => {
+        // 执行匹配项中的action逻辑, 需要考虑到每个action是异步操作，所以run函数必须是async
+        for(let item of targetFlagList) {
             if(item.action) {
                 const index = item.index
                 const param = item.flag
-                item.action({index, param}, args)
+                await item.action({index, param}, args)
             }
-        })
+        }
 
         // 如果注入了Output实例，则在没有任何参数的情况下，render实例，输出帮助文档
         if(this._outputIns && args.length == 0) {

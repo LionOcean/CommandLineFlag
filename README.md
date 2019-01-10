@@ -1,9 +1,9 @@
 # CommandLineFlag
 An easy tool for generating CLI and controling command params
 
-> version: 0.0.3
+> version: 0.0.5
 
-> Date: 2019/1/9
+> Date: 2019/1/10
 
 > 提供命令行参数注册解析，和输出cli文档功能
 
@@ -132,6 +132,7 @@ An easy tool for generating CLI and controling command params
 
 ## Attentions
 1. 在Flag实例的多个方法里，如果存在flag标志位，flag目前只支持字符串写法，但是支持管道字符串，例如`-V | --version`(管道符支持空格)。善用管道字符串可以快速解析多个标志位。
+2. 当Flag实例的方法链式调用时，会将匹配到的action方法存到一个数组内维护，action方法支持异步函数，因为Flag的run方法也是异步，每个action触发的顺序以链式调用顺序作为标准。
 
 ## license
 * MIT
