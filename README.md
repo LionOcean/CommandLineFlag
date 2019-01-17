@@ -26,7 +26,7 @@ An easy tool for generating CLI and controling command params
 * 两个模板均完全解耦，可以独立使用。也支持flag实例注入output实例，用于快速生成command或option帮助文档。
 * 模仿commander的api风格，几乎所有的api支持链式调用(flag的run方法和output的render方法不支持)。
 
-## Dictionary tree
+## Directory tree
 ``` bash
     ├─example  // 例子demo
     |─src       
@@ -121,6 +121,8 @@ An easy tool for generating CLI and controling command params
     * isShowLog `[Boolean]` 决定是否渲染文档并输出到stdout，默认为true
 > 必须调用render方法，否则文档不会被渲染输出，如果搭配Flag模块，并且Flag实例inject(注入)了Output实例，那么不需要调用render。因为Flag实例默认实现了该方法   
 
+## Example
+> 见完整项目[hotload-cli](https://github.com/alanchenchen/hotload-cli/blob/master/bin/hotload)的cli部分
 
 ## Unit test
 * test目录里目前只有一个测试用例，分别测试了`Flag`实例的`command()`、`option()`和`version()`方法。
