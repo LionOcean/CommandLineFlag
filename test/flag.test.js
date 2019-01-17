@@ -2,10 +2,10 @@ const assert = require('assert')
 const {execFile} = require('child_process')
 
 /**
- * @description mocha的测试用例，此处用的node自带的断言模块assert
+ * @description mocha unit tests with node assert module
  */
 describe('flag execute cmd params', function() {
-    it('command method should mathc the first param ', function(done) {
+    it('command method should match the first param ', function(done) {
         execFile('node', ['./test/flag.demo.js', 'init', 'a.js'], (err, stdout, stderr) => {
             if(err) {
                 done(err)
@@ -15,7 +15,7 @@ describe('flag execute cmd params', function() {
         })
     })
 
-    it('option method should mathc any param dependding on flag ', function(done) {
+    it('option method should match any param dependding on flag ', function(done) {
         execFile('node', ['./test/flag.demo.js', '--cmd', 'node', '--version'], (err, stdout, stderr) => {
             if(err) {
                 done(err)
@@ -25,7 +25,7 @@ describe('flag execute cmd params', function() {
         })
     })
 
-    it('version method should mathc -V or --version flag and output somme messages ', function(done) {
+    it('version method should match -V or --version flag and output somme messages ', function(done) {
         execFile('node', ['./test/flag.demo.js', '--version'], (err, stdout, stderr) => {
             if(err) {
                 done(err)

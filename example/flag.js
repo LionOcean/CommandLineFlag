@@ -4,7 +4,7 @@ const doc = output()
 
 doc
   .writeUsage('flag <command> [options]', 'cli test')
-  .write('测试测试测试', '\nflag plugin')
+  .write('test', '\nflag plugin')
 
 const commandlist = [
     'create',
@@ -18,19 +18,19 @@ program.register('name', (info) => {
     return program.param({
         flag: 'name',
         action() {
-            console.log('你匹配了name标志位', info)
+            console.log('match name flag successfully', info)
         }
     })
 })
 
 program
     .inject(doc)
-    .name('自定义信息')
+    .name('hello flag!')
     .param({
         index: 0,
         action({index, param}, args) {
             if(!commandlist.some(a => a == param)) {
-                console.log(`第一个参数必须是create或-h或--help或--version或或-V`)
+                console.log(`the first argument must be create | -h | --help | --version | -V`)
             }
         }
     })
