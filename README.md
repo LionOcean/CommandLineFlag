@@ -131,7 +131,7 @@ method returns a Output instance。
 * the test framework is mocha，if you want to add unit tests，follow ：
     1. `git clone git@github.com:LionOcean/CommandLineFlag.git`
     2. add js which should have `*.test.js` extname
-    3. `yarn`或`npm install` install devdependences mocha
+    3. `yarn` or `npm install` install devdependences mocha
     4. `npm test` open terminal to see result
 
 ## license
